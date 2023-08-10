@@ -24,6 +24,8 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const loggedIn = useSelector((state: RootState) => state.auth.loggedIn);
 
+  dispatch(logout());
+
   const handleLogout = () => {
     dispatch(logout());
   };

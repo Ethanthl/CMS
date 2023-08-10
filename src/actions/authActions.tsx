@@ -1,3 +1,5 @@
+import { createSession, destroySession } from "../helpers/sessions";
+
 interface User {
   user: string;
   password: string;
@@ -28,7 +30,9 @@ const checkCredentials = (credentials: { user: string; password: string }) => {
 };
 export const login = (credentials: { user: string; password: string }) => {
   if (checkCredentials(credentials)) {
-    console.log(true);
+    //Since this is only client side I've set the token to always be the same
+    //Would normally use JWT or response from server
+    createSession({ token: "token", user: credentials.user });
     return { type: "LOGIN", user: credentials.user || null };
   } else {
     return { type: "LOGIN_FAILED" };
@@ -37,6 +41,7 @@ export const login = (credentials: { user: string; password: string }) => {
 export type AuthAction = LoginAction | LoginFailedAction;
 
 export const logout = () => {
+  destroySession();
   return {
     type: "LOGOUT" as const,
   };
